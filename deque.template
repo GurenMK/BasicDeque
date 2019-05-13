@@ -1,0 +1,90 @@
+//Alexander Urbanyak
+//References: https://stackoverflow.com/questions/9602918/c-initialising-2-different-iterators-in-a-for-loop
+
+#include <cassert>
+#include <iterator>
+
+template <class Item>
+deque<Item>::deque() { }
+
+template <class Item>
+Item& deque<Item>::front() {
+    assert(!empty());
+    return l.front();
+}
+
+template <class Item>
+Item deque<Item>::front() const {
+    assert(!empty());
+    return l.front();
+}
+
+template <class Item>
+Item& deque<Item>::back() {
+    assert(!empty());
+    return l.back();
+}
+
+template <class Item>
+Item deque<Item>::back() const {
+    assert(!empty());
+    return l.back();
+}
+
+template <class Item>
+void deque<Item>::push_front(const Item& entry) {
+    l.push_front(entry);
+}
+
+template <class Item>
+void deque<Item>::push_back(const Item& entry) {
+    l.push_back(entry);
+}
+
+template <class Item>
+void deque<Item>::pop_front() {
+    assert(!empty());
+    l.pop_front();
+}
+
+template <class Item>
+void deque<Item>::pop_back() {
+    assert(!empty());
+    l.pop_back();
+}
+
+template <class Item>
+size_t deque<Item>::size() const {
+    return l.size();
+}
+
+template <class Item>
+bool deque<Item>::empty() const {
+    return l.size() == 0;
+}
+
+template <typename U>
+bool operator == (const deque<U>& dq1, const deque<U>& dq2){
+    if (dq1.l.size() != dq2.l.size()) {
+        return false;
+    }
+    else {
+        typename std::list<U>::const_iterator one = dq1.l.begin();
+        typename std::list<U>::const_iterator two = dq2.l.begin();
+        for(; two != dq2.l.end(); one++, two++) {
+            if (*one != *two) {
+                return false;
+            }
+        }
+    }
+        return true;
+}
+
+template <typename U>
+std::ostream& operator << (std::ostream& out, const deque<U>& dq) {
+    for(typename std::list<U>::const_iterator it = dq.l.begin(); it != dq.l.end(); it++) {
+        out << *it << " ";
+    }
+    out << std::endl;
+    return out;
+}
