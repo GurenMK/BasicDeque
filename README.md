@@ -1,1 +1,1 @@
-# BasicDeque
+# Deque
